@@ -1,0 +1,98 @@
+{
+  "app": {
+    "title": "Calculadora de Acero BOM UFuel"
+  },
+  "form": {
+    "title": "Configuracion del Tanque",
+    "steelGrade": "Grado de Acero",
+    "steelGradeOptions": {
+      "a36": "A-36",
+      "304ss": "304 Inoxidable",
+      "316ss": "316 Inoxidable"
+    },
+    "thickness": "Espesor del Acero",
+    "thicknessOptions": {
+      "3/16": "3/16\" (4.8 mm)",
+      "1/4": "1/4\" (6.35 mm)",
+      "5/16": "5/16\" (7.9 mm)",
+      "3/8": "3/8\" (9.5 mm)",
+      "1/2": "1/2\" (12.7 mm)"
+    },
+    "tankDiameter": "Diametro del Tanque",
+    "tankLength": "Longitud del Tanque",
+    "numberOfHeads": "Numero de Tapas",
+    "sheetWidths": "Anchos de Placa Disponibles",
+    "sheetLengths": "Largos de Placa Disponibles",
+    "inches": "pulgadas",
+    "calculate": "Calcular",
+    "reset": "Reiniciar",
+    "validation": {
+      "diameterRequired": "El diametro del tanque es requerido",
+      "diameterRange": "El diametro debe estar entre 36\" y 120\"",
+      "lengthRequired": "La longitud del tanque es requerida",
+      "lengthPositive": "La longitud debe ser mayor a 0",
+      "headsPositive": "El numero de tapas debe ser al menos 0"
+    }
+  },
+  "results": {
+    "title": "Resultados del Calculo",
+    "shell": {
+      "title": "Cuerpo del Tanque",
+      "outerDiameter": "Diametro Exterior (OD)",
+      "requiredLength": "Longitud de Acero Requerida",
+      "recommendedSheets": "Combinacion de Placas Recomendada",
+      "totalRawLength": "Longitud Total Ordenada",
+      "waste": "Desperdicio",
+      "wastePercent": "Porcentaje de Desperdicio",
+      "weight": "Peso del Cuerpo"
+    },
+    "heads": {
+      "title": "Tapas del Tanque",
+      "outerDiameter": "Diametro Exterior (OD)",
+      "requiredSheetWidth": "Ancho de Placa Requerido",
+      "sheetsNeeded": "Placas Necesarias",
+      "sheetDimensions": "Dimensiones de Placa",
+      "weight": "Peso de las Tapas"
+    },
+    "summary": {
+      "title": "Resumen",
+      "totalWeight": "Peso Total de Acero",
+      "shellWeight": "Peso del Cuerpo",
+      "headsWeight": "Peso de las Tapas"
+    },
+    "exportBOM": "Exportar Requisicion",
+    "newCalculation": "Nuevo Calculo"
+  },
+  "bom": {
+    "title": "Requisicion de Materiales",
+    "date": "Fecha",
+    "jobNumber": "Trabajo / ID del Tanque",
+    "enterJobNumber": "Ingrese numero de trabajo...",
+    "steelGrade": "Grado de Acero",
+    "lineItems": {
+      "item": "Articulo",
+      "quantity": "Cant",
+      "unit": "Unidad",
+      "description": "Descripcion",
+      "dimensions": "Dimensiones",
+      "weight": "Peso (kg)"
+    },
+    "items": {
+      "shellSheet": "Placa de Cuerpo",
+      "headSheet": "Placa de Tapa"
+    },
+    "totalWeight": "Peso Total",
+    "print": "Imprimir",
+    "downloadPDF": "Descargar PDF",
+    "back": "Volver a Resultados"
+  },
+  "units": {
+    "inches": "pulg",
+    "kg": "kg",
+    "sheets": "placas",
+    "pcs": "pzas"
+  },
+  "language": {
+    "toggle": "EN"
+  }
+}

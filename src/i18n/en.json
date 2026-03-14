@@ -1,0 +1,98 @@
+{
+  "app": {
+    "title": "UFuel BOM Steel Calculator"
+  },
+  "form": {
+    "title": "Tank Configuration",
+    "steelGrade": "Steel Grade",
+    "steelGradeOptions": {
+      "a36": "A-36",
+      "304ss": "304 Stainless",
+      "316ss": "316 Stainless"
+    },
+    "thickness": "Steel Thickness",
+    "thicknessOptions": {
+      "3/16": "3/16\" (4.8 mm)",
+      "1/4": "1/4\" (6.35 mm)",
+      "5/16": "5/16\" (7.9 mm)",
+      "3/8": "3/8\" (9.5 mm)",
+      "1/2": "1/2\" (12.7 mm)"
+    },
+    "tankDiameter": "Tank Diameter",
+    "tankLength": "Tank Length",
+    "numberOfHeads": "Number of Heads",
+    "sheetWidths": "Available Sheet Widths",
+    "sheetLengths": "Available Sheet Lengths",
+    "inches": "inches",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "validation": {
+      "diameterRequired": "Tank diameter is required",
+      "diameterRange": "Diameter must be between 36\" and 120\"",
+      "lengthRequired": "Tank length is required",
+      "lengthPositive": "Length must be greater than 0",
+      "headsPositive": "Number of heads must be at least 0"
+    }
+  },
+  "results": {
+    "title": "Calculation Results",
+    "shell": {
+      "title": "Shell (Body)",
+      "outerDiameter": "Outer Diameter (OD)",
+      "requiredLength": "Required Steel Length",
+      "recommendedSheets": "Recommended Sheet Combination",
+      "totalRawLength": "Total Raw Length Ordered",
+      "waste": "Waste",
+      "wastePercent": "Waste Percentage",
+      "weight": "Shell Weight"
+    },
+    "heads": {
+      "title": "Tank Heads",
+      "outerDiameter": "Outer Diameter (OD)",
+      "requiredSheetWidth": "Required Sheet Width",
+      "sheetsNeeded": "Sheets Needed",
+      "sheetDimensions": "Sheet Dimensions",
+      "weight": "Heads Weight"
+    },
+    "summary": {
+      "title": "Summary",
+      "totalWeight": "Total Steel Weight",
+      "shellWeight": "Shell Weight",
+      "headsWeight": "Heads Weight"
+    },
+    "exportBOM": "Export BOM",
+    "newCalculation": "New Calculation"
+  },
+  "bom": {
+    "title": "Materials Requisition",
+    "date": "Date",
+    "jobNumber": "Job / Tank ID",
+    "enterJobNumber": "Enter job number...",
+    "steelGrade": "Steel Grade",
+    "lineItems": {
+      "item": "Item",
+      "quantity": "Qty",
+      "unit": "Unit",
+      "description": "Description",
+      "dimensions": "Dimensions",
+      "weight": "Weight (kg)"
+    },
+    "items": {
+      "shellSheet": "Shell Sheet",
+      "headSheet": "Head Sheet"
+    },
+    "totalWeight": "Total Weight",
+    "print": "Print",
+    "downloadPDF": "Download PDF",
+    "back": "Back to Results"
+  },
+  "units": {
+    "inches": "in",
+    "kg": "kg",
+    "sheets": "sheets",
+    "pcs": "pcs"
+  },
+  "language": {
+    "toggle": "ES"
+  }
+}
