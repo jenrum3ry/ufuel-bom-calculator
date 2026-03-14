@@ -4,6 +4,21 @@
   },
   "form": {
     "title": "Configuracion del Tanque",
+    "instructions": {
+      "title": "Como Usar",
+      "step1": "Ingrese las dimensiones del tanque (diametro y longitud en pulgadas)",
+      "step2": "Seleccione los tamanos de placa disponibles con su proveedor",
+      "step3": "Haga clic en Calcular para ver el pedido optimo de acero con minimo desperdicio"
+    },
+    "tooltips": {
+      "steelGrade": "Seleccione el tipo de acero para su tanque. A-36 es el mas comun para tanques estandar.",
+      "thickness": "Espesor de la placa de acero. 1/4\" es el espesor mas utilizado.",
+      "diameter": "Diametro interior del tanque cilindrico en pulgadas. La calculadora agregara el espesor para calcular el diametro exterior.",
+      "length": "Longitud total del cuerpo del tanque en pulgadas, sin incluir las tapas.",
+      "heads": "Numero de tapas circulares. Usualmente 2 (una para cada extremo del tanque).",
+      "sheetWidths": "Haga clic para seleccionar/deseleccionar. Solo los anchos seleccionados se consideraran al calcular la combinacion optima.",
+      "sheetLengths": "Haga clic para seleccionar/deseleccionar. La calculadora encontrara la mejor combinacion de estos largos para minimizar el desperdicio."
+    },
     "steelGrade": "Grado de Acero",
     "steelGradeOptions": {
       "a36": "A-36",
@@ -22,7 +37,9 @@
     "tankLength": "Longitud del Tanque",
     "numberOfHeads": "Numero de Tapas",
     "sheetWidths": "Anchos de Placa Disponibles",
+    "sheetWidthsHelp": "Haga clic para alternar los anchos que ofrece su proveedor",
     "sheetLengths": "Largos de Placa Disponibles",
+    "sheetLengthsHelp": "Haga clic para alternar los largos que ofrece su proveedor",
     "inches": "pulgadas",
     "calculate": "Calcular",
     "reset": "Reiniciar",

@@ -4,6 +4,21 @@
   },
   "form": {
     "title": "Tank Configuration",
+    "instructions": {
+      "title": "How to Use",
+      "step1": "Enter your tank dimensions (diameter and length in inches)",
+      "step2": "Select which sheet sizes your supplier has available",
+      "step3": "Click Calculate to see the optimal steel order with minimum waste"
+    },
+    "tooltips": {
+      "steelGrade": "Select the type of steel for your tank. A-36 is most common for standard tanks.",
+      "thickness": "Wall thickness of the steel plate. 1/4\" is the most commonly used thickness.",
+      "diameter": "Inner diameter of the cylindrical tank in inches. The calculator will add thickness to compute outer diameter.",
+      "length": "Total length of the tank body (shell) in inches, not including the heads.",
+      "heads": "Number of circular end caps. Usually 2 (one for each end of the tank).",
+      "sheetWidths": "Click to select/deselect. Only selected widths will be considered when calculating the optimal sheet combination.",
+      "sheetLengths": "Click to select/deselect. The calculator will find the best combination of these lengths to minimize waste."
+    },
     "steelGrade": "Steel Grade",
     "steelGradeOptions": {
       "a36": "A-36",
@@ -22,7 +37,9 @@
     "tankLength": "Tank Length",
     "numberOfHeads": "Number of Heads",
     "sheetWidths": "Available Sheet Widths",
+    "sheetWidthsHelp": "Click to toggle which widths your supplier offers",
     "sheetLengths": "Available Sheet Lengths",
+    "sheetLengthsHelp": "Click to toggle which lengths your supplier offers",
     "inches": "inches",
     "calculate": "Calculate",
     "reset": "Reset",

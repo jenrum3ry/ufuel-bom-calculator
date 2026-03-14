@@ -3,6 +3,18 @@ import { useTranslation } from 'react-i18next';
 import { standardWidths, standardLengths } from '../logic/weightTable.js';
 
 /**
+ * Tooltip Component
+ */
+function Tooltip({ text }) {
+  return (
+    <span className="tooltip-wrapper">
+      <span className="tooltip-icon">?</span>
+      <span className="tooltip-text">{text}</span>
+    </span>
+  );
+}
+
+/**
  * Order Form Component
  * Screen 1 - Input form for tank configuration
  */
@@ -107,15 +119,25 @@ export default function OrderForm({ onCalculate }) {
 
   return (
     <form onSubmit={handleSubmit} className="bg-white p-6 max-w-3xl mx-auto">
-      <h2 className="font-heading text-2xl font-bold uppercase tracking-wide text-navy mb-6">
+      <h2 className="font-heading text-2xl font-bold uppercase tracking-wide text-navy mb-4">
         {t('form.title')}
       </h2>
+
+      {/* Instructions Box */}
+      <div className="instructions-box">
+        <h3>{t('form.instructions.title')}</h3>
+        <ol>
+          <li>{t('form.instructions.step1')}</li>
+          <li>{t('form.instructions.step2')}</li>
+          <li>{t('form.instructions.step3')}</li>
+        </ol>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Steel Grade */}
         <div>
           <label className="block text-sm font-semibold mb-2 text-dark-gray">
-            {t('form.steelGrade')}
+            {t('form.steelGrade')} <Tooltip text={t('form.tooltips.steelGrade')} />
           </label>
           <select
             name="steelGrade"
@@ -134,7 +156,7 @@ export default function OrderForm({ onCalculate }) {
         {/* Thickness */}
         <div>
           <label className="block text-sm font-semibold mb-2 text-dark-gray">
-            {t('form.thickness')}
+            {t('form.thickness')} <Tooltip text={t('form.tooltips.thickness')} />
           </label>
           <select
             name="thickness"
@@ -153,7 +175,7 @@ export default function OrderForm({ onCalculate }) {
         {/* Tank Diameter */}
         <div>
           <label className="block text-sm font-semibold mb-2 text-dark-gray">
-            {t('form.tankDiameter')} ({t('form.inches')})
+            {t('form.tankDiameter')} ({t('form.inches')}) <Tooltip text={t('form.tooltips.diameter')} />
           </label>
           <input
             type="number"
@@ -174,7 +196,7 @@ export default function OrderForm({ onCalculate }) {
         {/* Tank Length */}
         <div>
           <label className="block text-sm font-semibold mb-2 text-dark-gray">
-            {t('form.tankLength')} ({t('form.inches')})
+            {t('form.tankLength')} ({t('form.inches')}) <Tooltip text={t('form.tooltips.length')} />
           </label>
           <input
             type="number"
@@ -194,7 +216,7 @@ export default function OrderForm({ onCalculate }) {
         {/* Number of Heads */}
         <div>
           <label className="block text-sm font-semibold mb-2 text-dark-gray">
-            {t('form.numberOfHeads')}
+            {t('form.numberOfHeads')} <Tooltip text={t('form.tooltips.heads')} />
           </label>
           <input
             type="number"
@@ -215,8 +237,9 @@ export default function OrderForm({ onCalculate }) {
       {/* Available Sheet Widths */}
       <div className="mt-6">
         <label className="block text-sm font-semibold mb-2 text-dark-gray">
-          {t('form.sheetWidths')} ({t('form.inches')})
+          {t('form.sheetWidths')} ({t('form.inches')}) <Tooltip text={t('form.tooltips.sheetWidths')} />
         </label>
+        <p className="field-help mb-2">{t('form.sheetWidthsHelp')}</p>
         <div className="flex flex-wrap gap-2">
           {standardWidths.map(width => (
             <button
@@ -238,8 +261,9 @@ export default function OrderForm({ onCalculate }) {
       {/* Available Sheet Lengths */}
       <div className="mt-6">
         <label className="block text-sm font-semibold mb-2 text-dark-gray">
-          {t('form.sheetLengths')} ({t('form.inches')})
+          {t('form.sheetLengths')} ({t('form.inches')}) <Tooltip text={t('form.tooltips.sheetLengths')} />
         </label>
+        <p className="field-help mb-2">{t('form.sheetLengthsHelp')}</p>
         <div className="flex flex-wrap gap-2">
           {standardLengths.map(length => (
             <button
