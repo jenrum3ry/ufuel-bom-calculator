@@ -7,10 +7,17 @@ export default defineConfig({
   base: './', // Use relative paths for offline/USB deployment
   build: {
     outDir: 'dist',
-    assetsInlineLimit: 0, // Don't inline any assets to keep file structure clear
+    assetsInlineLimit: 0,
+    target: 'es2015',
+    minify: 'terser',
+    cssCodeSplit: false, // Bundle all CSS into one file
     rollupOptions: {
       output: {
-        manualChunks: undefined // Keep everything in one bundle for simplicity
+        format: 'iife',
+        inlineDynamicImports: true,
+        entryFileNames: 'assets/[name].js',
+        chunkFileNames: 'assets/[name].js',
+        assetFileNames: 'assets/[name].[ext]'
       }
     }
   }
