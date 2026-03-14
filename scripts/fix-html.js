@@ -15,7 +15,7 @@ const indexPath = join(distDir, 'index.html');
 let html = readFileSync(indexPath, 'utf-8');
 
 // Remove type="module" and crossorigin attributes from script tags
-html = html.replace(/<script type="module" crossorigin/g, '<script');
+html = html.replace(/<script type="module" crossorigin/g, '<script defer');
 html = html.replace(/ crossorigin/g, '');
 
 // Find CSS file in assets

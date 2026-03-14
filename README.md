@@ -1,16 +1,43 @@
-# React + Vite
+# UFuel BOM Steel Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A portable bill-of-materials calculator for cylindrical steel tank manufacturing. Calculates optimal steel sheet requirements, weight, and waste for tank shells and end caps. Supports English and Spanish, and can export results as a printable PDF.
 
-Currently, two official plugins are available:
+## Running Locally (No Installation Required)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The `dist/` folder contains a fully self-contained build. You only need a web browser.
 
-## React Compiler
+### Option 1: Open Directly in Browser (Simplest)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Navigate into the `dist/` folder and double-click `index.html`. Most browsers will open it directly.
 
-## Expanding the ESLint configuration
+### Option 2: Use the Included Start Scripts (Recommended)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The start scripts serve the app over a local HTTP server, which avoids browser security restrictions that can affect some features.
+
+**Windows:**
+1. Open the `dist/` folder
+2. Double-click `start.bat`
+3. A browser tab will open automatically at `http://localhost:8000`
+
+**macOS / Linux:**
+1. Open a terminal in the `dist/` folder
+2. Run: `./start.sh`
+3. A browser tab will open automatically at `http://localhost:8000`
+
+The scripts will use Python if available, or fall back to Node.js (`npx serve`). At least one of the following must be installed:
+- [Python 3](https://www.python.org/downloads/) (recommended)
+- [Node.js](https://nodejs.org/)
+
+---
+
+## Developer Setup
+
+```bash
+npm install
+npm run dev      # Start development server with hot reload
+npm run build    # Build for production (outputs to dist/)
+npm run lint     # Run ESLint
+npm run preview  # Preview the production build
+```
+
+The build script automatically post-processes `dist/index.html` for `file://` protocol compatibility.
