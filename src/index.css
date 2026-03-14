@@ -4,9 +4,6 @@
 @import '@fontsource/inter/400.css';
 @import '@fontsource/inter/600.css';
 
-/* Tailwind base styles */
-@import 'tailwindcss';
-
 /* UFuel Brand CSS Variables - exact values from Ufuellogo.png */
 :root {
   --color-navy: #2B5190;
@@ -22,7 +19,7 @@
 }
 
 /* Base styles */
-* {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -33,7 +30,123 @@ body {
   color: var(--color-dark-gray);
   background-color: var(--color-light-gray);
   min-height: 100vh;
+  line-height: 1.5;
 }
+
+/* Layout utilities */
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+.grid {
+  display: grid;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Spacing utilities */
+.p-2 { padding: 0.5rem; }
+.p-3 { padding: 0.75rem; }
+.p-4 { padding: 1rem; }
+.p-6 { padding: 1.5rem; }
+.p-8 { padding: 2rem; }
+
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+.px-8 { padding-left: 2rem; padding-right: 2rem; }
+
+.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+
+.pt-2 { padding-top: 0.5rem; }
+.pt-4 { padding-top: 1rem; }
+.pb-2 { padding-bottom: 0.5rem; }
+
+.m-2 { margin: 0.5rem; }
+.-m-2 { margin: -0.5rem; }
+
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mt-8 { margin-top: 2rem; }
+
+.mb-1 { margin-top: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 0.5rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+.space-y-3 > * + * { margin-top: 0.75rem; }
+
+/* Sizing utilities */
+.w-full { width: 100%; }
+.max-w-3xl { max-width: 48rem; }
+.max-w-4xl { max-width: 56rem; }
+.h-12 { height: 3rem; }
+.h-16 { height: 4rem; }
 
 /* Typography utilities */
 .font-heading {
@@ -44,38 +157,62 @@ body {
   font-family: var(--font-body);
 }
 
-/* Brand color utilities */
-.bg-navy {
-  background-color: var(--color-navy);
-}
+.text-sm { font-size: 0.875rem; }
+.text-lg { font-size: 1.125rem; }
+.text-xl { font-size: 1.25rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-3xl { font-size: 1.875rem; }
 
-.bg-orange {
-  background-color: var(--color-orange);
-}
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
 
-.bg-light-gray {
-  background-color: var(--color-light-gray);
-}
+.uppercase { text-transform: uppercase; }
+.tracking-wide { letter-spacing: 0.05em; }
 
-.text-navy {
-  color: var(--color-navy);
-}
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
 
-.text-orange {
-  color: var(--color-orange);
-}
+.italic { font-style: italic; }
 
-.text-dark-gray {
-  color: var(--color-dark-gray);
-}
+/* Color utilities */
+.bg-navy { background-color: var(--color-navy); }
+.bg-orange { background-color: var(--color-orange); }
+.bg-white { background-color: var(--color-white); }
+.bg-light-gray { background-color: var(--color-light-gray); }
 
-.border-brand {
-  border-color: var(--color-border);
-}
+.text-navy { color: var(--color-navy); }
+.text-orange { color: var(--color-orange); }
+.text-white { color: var(--color-white); }
+.text-dark-gray { color: var(--color-dark-gray); }
+.text-red-500 { color: #ef4444; }
 
-.border-navy {
-  border-color: var(--color-navy);
-}
+.opacity-60 { opacity: 0.6; }
+.opacity-80 { opacity: 0.8; }
+
+/* Border utilities */
+.border { border-width: 1px; border-style: solid; }
+.border-b { border-bottom-width: 1px; border-bottom-style: solid; }
+.border-t { border-top-width: 1px; border-top-style: solid; }
+.border-b-4 { border-bottom-width: 4px; border-bottom-style: solid; }
+
+.border-brand { border-color: var(--color-border); }
+.border-navy { border-color: var(--color-navy); }
+.border-red-500 { border-color: #ef4444; }
+
+/* Display utilities */
+.block { display: block; }
+.hidden { display: none; }
+.inline-flex { display: inline-flex; }
+
+/* Object utilities */
+.object-contain { object-fit: contain; }
+
+/* Transition utilities */
+.transition-colors { transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
+
+/* Table styles */
+.border-collapse { border-collapse: collapse; }
 
 /* Button styles */
 .btn-primary {
@@ -121,18 +258,40 @@ body {
 
 /* Form input styles */
 input[type="number"],
+input[type="text"],
 select {
   font-family: var(--font-body);
   padding: 0.5rem 0.75rem;
   border: 1px solid var(--color-border);
   background-color: var(--color-white);
   font-size: 1rem;
+  width: 100%;
 }
 
 input[type="number"]:focus,
+input[type="text"]:focus,
 select:focus {
   outline: 2px solid var(--color-navy);
   outline-offset: -1px;
+}
+
+/* Responsive utilities */
+@media (min-width: 768px) {
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .md\:block {
+    display: block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 /* Print styles for BOM export */
@@ -144,4 +303,13 @@ select:focus {
   .no-print {
     display: none !important;
   }
+
+  .print\:block {
+    display: block !important;
+  }
+}
+
+/* Font mono for dimensions */
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, monospace;
 }
