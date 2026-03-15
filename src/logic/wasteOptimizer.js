@@ -1,60 +1,70 @@
 /**
  * Waste Optimizer
  *
- * Finds the optimal combination of steel sheets to cover a required length
- * with minimum waste, accounting for seam allowances
+ * Finds the optimal combination of steel sheet widths to cover a required axial
+ * tank length with minimum waste, accounting for seam allowances and head fit-up.
  */
 
-import { standardLengths } from './weightTable.js';
+import { standardWidths } from './weightTable.js';
 
 /**
- * Calculate the effective length needed including seam allowances
- * Formula: required = tank_length + (num_sections - 1)
+ * Calculate the effective raw axial steel needed including seam losses and head adjustment.
  *
- * @param {number} tankLength - Tank length in inches
- * @param {number} numSections - Number of sheet sections
- * @returns {number} Effective length needed in inches
+ * Each interior seam consumes 1.5" (lap weld overlap).
+ * Each end gains 1" because the head skirt (3" lip pushed in 2") extends 1" beyond the shell ring.
+ * Net head adjustment = +2" gain (1" per end) = subtract 2" from raw requirement.
+ *
+ * Formula: tankLength + (numSections - 1) * 1.5 - headAdjustment
+ *
+ * @param {number} tankLength - Tank axial length in inches
+ * @param {number} numSections - Number of sheet courses (rings)
+ * @param {number} headAdjustment - Inches gained from head fit-up (default 2)
+ * @returns {number} Required raw axial steel in inches
  */
-export function calculateEffectiveLength(tankLength, numSections) {
-  return tankLength + Math.max(0, numSections - 1);
+export function calculateEffectiveLength(tankLength, numSections, headAdjustment = 2) {
+  return tankLength + Math.max(0, numSections - 1) * 1.5 - headAdjustment;
 }
 
 /**
- * Find the optimal sheet combination (least waste)
- * Accounts for seam allowances when using multiple sheets
+ * Find the optimal sheet width combination (least waste) to cover the tank axial length.
+ * Accounts for 1.5" seam allowances and 2" head fit-up adjustment.
  *
- * @param {number} tankLength - Tank length in inches (raw, before seam allowance)
- * @param {number[]} availableLengths - Available sheet lengths in inches
+ * @param {number} tankLength - Tank axial length in inches (raw, before allowances)
+ * @param {number[]} availableWidths - Available sheet widths in inches
+ * @param {number} headAdjustment - Inches gained from head fit-up (default 2)
  * @returns {Object} Optimal combination with details
  */
-export function findOptimalSheetCombination(tankLength, availableLengths = standardLengths) {
-  const sorted = [...availableLengths].sort((a, b) => a - b);
+export function findOptimalSheetCombination(tankLength, availableWidths = standardWidths, headAdjustment = 2) {
+  const sorted = [...availableWidths].sort((a, b) => a - b);
 
-  // First, check if a single sheet can cover it (no seam allowance needed)
-  for (const length of sorted) {
-    if (length >= tankLength) {
+  // Check if a single sheet can cover it (1 course = no interior seams)
+  for (const width of sorted) {
+    const effectiveRequired = calculateEffectiveLength(tankLength, 1, headAdjustment);
+    if (width >= effectiveRequired) {
       return {
-        sheets: [{ length, count: 1 }],
-        totalLength: length,
-        waste: length - tankLength,
-        description: `1 x ${length}"`
+        sheets: [{ length: width, count: 1 }],
+        totalLength: width,
+        waste: width - effectiveRequired,
+        effectiveRequired,
+        description: `1 x ${width}"`
       };
     }
   }
 
-  // Need multiple sheets - find optimal combination accounting for seam allowances
-  const combinations = findAllCombinationsWithSeams(tankLength, availableLengths, 8);
+  // Need multiple courses — find optimal combination accounting for seam allowances
+  const combinations = findAllCombinationsWithSeams(tankLength, availableWidths, 8, headAdjustment);
 
   if (combinations.length === 0) {
-    // Fallback: use largest sheet and calculate how many needed
-    const largest = Math.max(...availableLengths);
-    const count = Math.ceil(tankLength / (largest - 1)) + 1; // Account for seams
-    const effectiveRequired = calculateEffectiveLength(tankLength, count);
+    // Fallback: use largest width and calculate how many needed
+    const largest = Math.max(...availableWidths);
+    const count = Math.ceil((tankLength + headAdjustment) / (largest - 1.5)) + 1;
+    const effectiveRequired = calculateEffectiveLength(tankLength, count, headAdjustment);
     const totalLength = largest * count;
     return {
       sheets: [{ length: largest, count }],
       totalLength,
       waste: totalLength - effectiveRequired,
+      effectiveRequired,
       description: `${count} x ${largest}"`
     };
   }
@@ -62,7 +72,7 @@ export function findOptimalSheetCombination(tankLength, availableLengths = stand
   // Get the best combination (least waste)
   const best = combinations[0];
 
-  // Group sheets by length for cleaner output
+  // Group sheets by width for cleaner output
   const grouped = groupSheets(best.sheets);
 
   return {
@@ -75,27 +85,25 @@ export function findOptimalSheetCombination(tankLength, availableLengths = stand
 }
 
 /**
- * Find all combinations that can cover the tank length including seam allowances
+ * Find all combinations that can cover the tank axial length including seam allowances
  *
- * @param {number} tankLength - Raw tank length in inches
- * @param {number[]} availableLengths - Available sheet lengths in inches
- * @param {number} maxSheets - Maximum number of sheets to consider
+ * @param {number} tankLength - Raw tank axial length in inches
+ * @param {number[]} availableWidths - Available sheet widths in inches
+ * @param {number} maxSheets - Maximum number of courses to consider
+ * @param {number} headAdjustment - Inches gained from head fit-up
  * @returns {Object[]} Array of valid combinations sorted by waste (ascending)
  */
-function findAllCombinationsWithSeams(tankLength, availableLengths = standardLengths, maxSheets = 8) {
+function findAllCombinationsWithSeams(tankLength, availableWidths = standardWidths, maxSheets = 8, headAdjustment = 2) {
   const combinations = [];
-  const sorted = [...availableLengths].sort((a, b) => b - a); // Sort descending
+  const sorted = [...availableWidths].sort((a, b) => b - a); // Sort descending
 
-  // Try all combinations up to maxSheets
   function findCombos(currentCombo, startIdx) {
     const numSheets = currentCombo.length;
     if (numSheets > maxSheets) return;
 
-    // Calculate current total and required length with seams
-    const currentTotal = currentCombo.reduce((sum, len) => sum + len, 0);
-    const effectiveRequired = calculateEffectiveLength(tankLength, numSheets);
+    const currentTotal = currentCombo.reduce((sum, w) => sum + w, 0);
+    const effectiveRequired = calculateEffectiveLength(tankLength, numSheets, headAdjustment);
 
-    // If we've met or exceeded the requirement, record this combination
     if (currentTotal >= effectiveRequired && numSheets > 0) {
       combinations.push({
         sheets: [...currentCombo],
@@ -103,14 +111,13 @@ function findAllCombinationsWithSeams(tankLength, availableLengths = standardLen
         effectiveRequired,
         waste: currentTotal - effectiveRequired
       });
-      // Don't return - keep looking for potentially better combinations
+      // Don't return — keep looking for better combinations
     }
 
-    // If we haven't met the requirement yet, try adding more sheets
     if (currentTotal < effectiveRequired || numSheets === 0) {
       for (let i = startIdx; i < sorted.length; i++) {
         currentCombo.push(sorted[i]);
-        findCombos(currentCombo, i); // Allow same length again
+        findCombos(currentCombo, i); // Allow same width again
         currentCombo.pop();
       }
     }
@@ -137,15 +144,15 @@ function findAllCombinationsWithSeams(tankLength, availableLengths = standardLen
 }
 
 /**
- * Group an array of sheet lengths into counts
- * @param {number[]} sheets - Array of sheet lengths
+ * Group an array of sheet widths into counts
+ * @param {number[]} sheets - Array of sheet widths
  * @returns {Object[]} Array of {length, count} objects
  */
 function groupSheets(sheets) {
   const counts = {};
 
-  for (const length of sheets) {
-    counts[length] = (counts[length] || 0) + 1;
+  for (const width of sheets) {
+    counts[width] = (counts[width] || 0) + 1;
   }
 
   return Object.entries(counts)
@@ -169,11 +176,11 @@ function formatCombination(grouped) {
 
 /**
  * Calculate seam allowance for multiple sheets
- * Each interior seam requires 1" overlap
+ * Each interior seam requires 1.5" overlap
  *
  * @param {number} numSheets - Number of sheets
  * @returns {number} Seam allowance in inches
  */
 export function calculateSeamAllowance(numSheets) {
-  return Math.max(0, numSheets - 1);
+  return Math.max(0, numSheets - 1) * 1.5;
 }

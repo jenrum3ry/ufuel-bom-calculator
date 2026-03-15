@@ -43,9 +43,16 @@ export default function Results({ results, onExportBOM, onNewCalculation }) {
               </div>
 
               <div className="flex justify-between border-b border-brand pb-2">
-                <span className="text-dark-gray">{t('results.shell.requiredLength')}</span>
+                <span className="text-dark-gray">{t('results.shell.circumference')}</span>
                 <span className="font-bold text-navy text-lg">
-                  {formatNumber(shell.requiredLength, 1)}"
+                  {formatNumber(shell.circumferenceCut, 1)}"
+                </span>
+              </div>
+
+              <div className="flex justify-between border-b border-brand pb-2">
+                <span className="text-dark-gray">{t('results.shell.orderedSheetLength')}</span>
+                <span className="font-bold text-navy text-lg">
+                  {formatNumber(shell.orderedSheetLength, 0)}"
                 </span>
               </div>
 
@@ -57,16 +64,16 @@ export default function Results({ results, onExportBOM, onNewCalculation }) {
               </div>
 
               <div className="flex justify-between border-b border-brand pb-2">
-                <span className="text-dark-gray">{t('results.shell.totalRawLength')}</span>
+                <span className="text-dark-gray">{t('results.shell.totalRawAxial')}</span>
                 <span className="font-bold text-navy text-lg">
-                  {formatNumber(shell.totalRawLength, 0)}"
+                  {formatNumber(shell.totalRawAxial, 0)}"
                 </span>
               </div>
 
               <div className="flex justify-between border-b border-brand pb-2">
                 <span className="text-dark-gray">{t('results.shell.waste')}</span>
                 <span className="font-bold text-orange">
-                  {formatNumber(shell.waste, 1)}" ({formatNumber(shell.wastePercent, 1)}%)
+                  {formatNumber(shell.axialWaste, 1)}" ({formatNumber(shell.axialWastePercent, 1)}%)
                 </span>
               </div>
 
@@ -79,12 +86,9 @@ export default function Results({ results, onExportBOM, onNewCalculation }) {
 
               {/* Sheet details */}
               <div className="mt-4 pt-4 border-t border-brand">
-                <p className="text-sm text-dark-gray mb-2">
-                  {t('results.shell.requiredLength')}: {shell.requiredSheetWidth}" {t('form.sheetWidths').toLowerCase()}
-                </p>
                 {shell.sheetDetails?.map((sheet, idx) => (
                   <p key={idx} className="text-sm text-dark-gray">
-                    {sheet.count} x {sheet.width}" x {sheet.length}" = {formatNumber(sheet.weight, 2)} {t('units.kg')}
+                    {sheet.count} x {sheet.width}" × {sheet.length}" (cortar a {sheet.cutLength}") = {formatNumber(sheet.weight, 2)} {t('units.kg')}
                   </p>
                 ))}
               </div>

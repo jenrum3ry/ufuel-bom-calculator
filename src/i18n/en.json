@@ -56,10 +56,11 @@
     "shell": {
       "title": "Shell (Body)",
       "outerDiameter": "Outer Diameter (OD)",
-      "requiredLength": "Required Steel Length",
-      "recommendedSheets": "Recommended Sheet Combination",
-      "totalRawLength": "Total Raw Length Ordered",
-      "waste": "Waste",
+      "circumference": "Circumference (cut to)",
+      "orderedSheetLength": "Sheet Length (ordered)",
+      "recommendedSheets": "Recommended Widths (axial)",
+      "totalRawAxial": "Total Raw Axial Width",
+      "waste": "Axial Waste",
       "wastePercent": "Waste Percentage",
       "weight": "Shell Weight"
     },
