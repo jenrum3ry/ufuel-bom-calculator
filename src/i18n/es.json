@@ -12,7 +12,7 @@
     "tooltips": {
       "steelGrade": "Seleccione el tipo de acero para su tanque. A-36 es el mas comun para tanques estandar.",
       "thickness": "Espesor de la placa de acero. 1/4\" es el espesor mas utilizado.",
-      "diameter": "Diametro interior del tanque cilindrico en pulgadas. La calculadora agregara el espesor para calcular el diametro exterior.",
+      "diameter": "Diametro exterior (OD) del tanque cilindrico en pulgadas.",
       "length": "Longitud total del cuerpo del tanque en pulgadas, sin incluir las tapas.",
       "heads": "Numero de tapas circulares. Usualmente 2 (una para cada extremo del tanque).",
       "sheetWidths": "Haga clic para seleccionar/deseleccionar. Solo los anchos seleccionados se consideraran al calcular la combinacion optima.",
