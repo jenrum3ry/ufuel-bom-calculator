@@ -56,10 +56,11 @@
     "shell": {
       "title": "Cuerpo del Tanque",
       "outerDiameter": "Diametro Exterior (OD)",
-      "requiredLength": "Longitud de Acero Requerida",
-      "recommendedSheets": "Combinacion de Placas Recomendada",
-      "totalRawLength": "Longitud Total Ordenada",
-      "waste": "Desperdicio",
+      "circumference": "Circunferencia (cortar a)",
+      "orderedSheetLength": "Largo de Placa (a ordenar)",
+      "recommendedSheets": "Anchos Recomendados (axial)",
+      "totalRawAxial": "Ancho Axial Total en Bruto",
+      "waste": "Desperdicio Axial",
       "wastePercent": "Porcentaje de Desperdicio",
       "weight": "Peso del Cuerpo"
     },

@@ -33,7 +33,6 @@ export default function OrderForm({ onCalculate }) {
 
   const [errors, setErrors] = useState({});
 
-  const thicknessOptions = ['3/16', '1/4', '5/16', '3/8', '1/2'];
   const gradeOptions = ['a36', '304ss', '316ss'];
 
   const handleChange = (e) => {
@@ -153,23 +152,14 @@ export default function OrderForm({ onCalculate }) {
           </select>
         </div>
 
-        {/* Thickness */}
+        {/* Thickness — fixed at 1/4" (6.3mm), only option from supplier */}
         <div>
           <label className="block text-sm font-semibold mb-2 text-dark-gray">
-            {t('form.thickness')} <Tooltip text={t('form.tooltips.thickness')} />
+            {t('form.thickness')}
           </label>
-          <select
-            name="thickness"
-            value={formData.thickness}
-            onChange={handleChange}
-            className="w-full"
-          >
-            {thicknessOptions.map(thick => (
-              <option key={thick} value={thick}>
-                {t(`form.thicknessOptions.${thick}`)}
-              </option>
-            ))}
-          </select>
+          <div className="w-full px-3 py-2 border border-brand bg-light-gray text-dark-gray font-semibold">
+            1/4" (6.3 mm)
+          </div>
         </div>
 
         {/* Tank Diameter */}

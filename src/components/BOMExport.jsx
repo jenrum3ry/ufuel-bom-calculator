@@ -47,7 +47,7 @@ export default function BOMExport({ results, onBack }) {
         qty: sheet.count,
         unit: t('units.pcs'),
         description: t('bom.items.shellSheet'),
-        dimensions: `${sheet.width}" x ${sheet.length}" x ${input.thickness}"`,
+        dimensions: `${sheet.width}" x ${sheet.length}" (CORTAR A ${sheet.cutLength}") x ${input.thickness}"`,
         weight: sheet.weight
       });
     });
