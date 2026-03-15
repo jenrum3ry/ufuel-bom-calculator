@@ -12,7 +12,7 @@
     "tooltips": {
       "steelGrade": "Select the type of steel for your tank. A-36 is most common for standard tanks.",
       "thickness": "Wall thickness of the steel plate. 1/4\" is the most commonly used thickness.",
-      "diameter": "Inner diameter of the cylindrical tank in inches. The calculator will add thickness to compute outer diameter.",
+      "diameter": "Outer diameter (OD) of the cylindrical tank in inches.",
       "length": "Total length of the tank body (shell) in inches, not including the heads.",
       "heads": "Number of circular end caps. Usually 2 (one for each end of the tank).",
       "sheetWidths": "Click to select/deselect. Only selected widths will be considered when calculating the optimal sheet combination.",

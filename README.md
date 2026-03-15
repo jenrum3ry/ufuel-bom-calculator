@@ -4,7 +4,7 @@ A portable bill-of-materials calculator for cylindrical steel tank manufacturing
 
 ## How to Use
 
-1. Enter the tank inner diameter and length in inches.
+1. Enter the tank **outer diameter** (OD) and length in inches.
 2. Click **Calculate**.
 
 The calculator always assumes:

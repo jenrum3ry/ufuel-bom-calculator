@@ -7,19 +7,14 @@
 import { thicknessInInches, standardWidths, calculateWeight } from './weightTable.js';
 
 /**
- * Calculate the Outer Diameter (OD) of the tank
- * Same formula as shell: OD = Tank Diameter + (2 × Thickness)
+ * Return the Outer Diameter (OD) of the tank.
+ * The user-supplied tankDiameter is already the OD.
  *
- * @param {number} tankDiameter - Inner diameter in inches
- * @param {string} thickness - Thickness as fraction string (e.g., '1/4')
+ * @param {number} tankDiameter - Outer diameter in inches
  * @returns {number} Outer diameter in inches
  */
-export function calculateOD(tankDiameter, thickness) {
-  const thicknessValue = thicknessInInches[thickness];
-  if (!thicknessValue) {
-    throw new Error(`Unknown thickness: ${thickness}`);
-  }
-  return tankDiameter + (2 * thicknessValue);
+export function calculateOD(tankDiameter) {
+  return tankDiameter;
 }
 
 /**
