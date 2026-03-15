@@ -179,12 +179,12 @@ export default function OrderForm({ onCalculate }) {
           <label className="block text-sm font-semibold mb-2 text-dark-gray">
             {t('form.tankDiameter')} ({t('form.inches')}) <Tooltip text={t('form.tooltips.diameter')} />
           </label>
-          <div className="flex gap-2">
+          <div className="grid grid-cols-2 gap-2">
             <select
               name="diameterWhole"
               value={formData.diameterWhole}
               onChange={handleChange}
-              className={`flex-1 ${errors.tankDiameter ? 'border-red-500' : ''}`}
+              className={`w-full ${errors.tankDiameter ? 'border-red-500' : ''}`}
             >
               <option value="">-- in --</option>
               {Array.from({ length: 85 }, (_, i) => i + 36).map(n => (
@@ -195,7 +195,7 @@ export default function OrderForm({ onCalculate }) {
               name="diameterFraction"
               value={formData.diameterFraction}
               onChange={handleChange}
-              className="w-28"
+              className="w-full"
             >
               {fractionOptions.map(opt => (
                 <option key={opt.label} value={opt.label}>{fracLabel(opt)}</option>
@@ -212,12 +212,12 @@ export default function OrderForm({ onCalculate }) {
           <label className="block text-sm font-semibold mb-2 text-dark-gray">
             {t('form.tankLength')} ({t('form.inches')}) <Tooltip text={t('form.tooltips.length')} />
           </label>
-          <div className="flex gap-2">
+          <div className="grid grid-cols-2 gap-2">
             <select
               name="lengthWhole"
               value={formData.lengthWhole}
               onChange={handleChange}
-              className={`flex-1 ${errors.tankLength ? 'border-red-500' : ''}`}
+              className={`w-full ${errors.tankLength ? 'border-red-500' : ''}`}
             >
               <option value="">-- in --</option>
               {Array.from({ length: 469 }, (_, i) => i + 12).map(n => (
@@ -228,7 +228,7 @@ export default function OrderForm({ onCalculate }) {
               name="lengthFraction"
               value={formData.lengthFraction}
               onChange={handleChange}
-              className="w-28"
+              className="w-full"
             >
               {fractionOptions.map(opt => (
                 <option key={opt.label} value={opt.label}>{fracLabel(opt)}</option>
