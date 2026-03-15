@@ -7,8 +7,7 @@
     "instructions": {
       "title": "Como Usar",
       "step1": "Ingrese las dimensiones del tanque (diametro y longitud en pulgadas)",
-      "step2": "Seleccione los tamanos de placa disponibles con su proveedor",
-      "step3": "Haga clic en Calcular para ver el pedido optimo de acero con minimo desperdicio"
+      "step2": "Haga clic en Calcular para ver el pedido optimo de acero con minimo desperdicio"
     },
     "tooltips": {
       "steelGrade": "Seleccione el tipo de acero para su tanque. A-36 es el mas comun para tanques estandar.",

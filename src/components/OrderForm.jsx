@@ -25,10 +25,7 @@ export default function OrderForm({ onCalculate }) {
     steelGrade: 'a36',
     thickness: '1/4',
     tankDiameter: '',
-    tankLength: '',
-    numberOfHeads: 2,
-    selectedWidths: [...standardWidths],
-    selectedLengths: [...standardLengths]
+    tankLength: ''
   });
 
   const [errors, setErrors] = useState({});
@@ -47,24 +44,6 @@ export default function OrderForm({ onCalculate }) {
     }
   };
 
-  const toggleWidth = (width) => {
-    setFormData(prev => {
-      const newWidths = prev.selectedWidths.includes(width)
-        ? prev.selectedWidths.filter(w => w !== width)
-        : [...prev.selectedWidths, width].sort((a, b) => a - b);
-      return { ...prev, selectedWidths: newWidths };
-    });
-  };
-
-  const toggleLength = (length) => {
-    setFormData(prev => {
-      const newLengths = prev.selectedLengths.includes(length)
-        ? prev.selectedLengths.filter(l => l !== length)
-        : [...prev.selectedLengths, length].sort((a, b) => a - b);
-      return { ...prev, selectedLengths: newLengths };
-    });
-  };
-
   const validate = () => {
     const newErrors = {};
 
@@ -80,10 +59,6 @@ export default function OrderForm({ onCalculate }) {
       newErrors.tankLength = t('form.validation.lengthPositive');
     }
 
-    if (formData.numberOfHeads < 0) {
-      newErrors.numberOfHeads = t('form.validation.headsPositive');
-    }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -96,9 +71,9 @@ export default function OrderForm({ onCalculate }) {
         thickness: formData.thickness,
         tankDiameter: formData.tankDiameter,
         tankLength: formData.tankLength,
-        numberOfHeads: formData.numberOfHeads,
-        availableWidths: formData.selectedWidths,
-        availableLengths: formData.selectedLengths
+        numberOfHeads: 2,
+        availableWidths: [...standardWidths],
+        availableLengths: [...standardLengths]
       });
     }
   };
@@ -108,10 +83,7 @@ export default function OrderForm({ onCalculate }) {
       steelGrade: 'a36',
       thickness: '1/4',
       tankDiameter: '',
-      tankLength: '',
-      numberOfHeads: 2,
-      selectedWidths: [...standardWidths],
-      selectedLengths: [...standardLengths]
+      tankLength: ''
     });
     setErrors({});
   };
@@ -128,7 +100,6 @@ export default function OrderForm({ onCalculate }) {
         <ol>
           <li>{t('form.instructions.step1')}</li>
           <li>{t('form.instructions.step2')}</li>
-          <li>{t('form.instructions.step3')}</li>
         </ol>
       </div>
 
@@ -203,73 +174,6 @@ export default function OrderForm({ onCalculate }) {
           )}
         </div>
 
-        {/* Number of Heads */}
-        <div>
-          <label className="block text-sm font-semibold mb-2 text-dark-gray">
-            {t('form.numberOfHeads')} <Tooltip text={t('form.tooltips.heads')} />
-          </label>
-          <input
-            type="number"
-            name="numberOfHeads"
-            value={formData.numberOfHeads}
-            onChange={handleChange}
-            min="0"
-            max="10"
-            step="1"
-            className={`w-full ${errors.numberOfHeads ? 'border-red-500' : ''}`}
-          />
-          {errors.numberOfHeads && (
-            <p className="text-red-500 text-sm mt-1">{errors.numberOfHeads}</p>
-          )}
-        </div>
-      </div>
-
-      {/* Available Sheet Widths */}
-      <div className="mt-6">
-        <label className="block text-sm font-semibold mb-2 text-dark-gray">
-          {t('form.sheetWidths')} ({t('form.inches')}) <Tooltip text={t('form.tooltips.sheetWidths')} />
-        </label>
-        <p className="field-help mb-2">{t('form.sheetWidthsHelp')}</p>
-        <div className="flex flex-wrap gap-2">
-          {standardWidths.map(width => (
-            <button
-              key={width}
-              type="button"
-              onClick={() => toggleWidth(width)}
-              className={`px-4 py-2 border transition-colors ${
-                formData.selectedWidths.includes(width)
-                  ? 'bg-navy text-white border-navy'
-                  : 'bg-white text-dark-gray border-brand hover:border-navy'
-              }`}
-            >
-              {width}"
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Available Sheet Lengths */}
-      <div className="mt-6">
-        <label className="block text-sm font-semibold mb-2 text-dark-gray">
-          {t('form.sheetLengths')} ({t('form.inches')}) <Tooltip text={t('form.tooltips.sheetLengths')} />
-        </label>
-        <p className="field-help mb-2">{t('form.sheetLengthsHelp')}</p>
-        <div className="flex flex-wrap gap-2">
-          {standardLengths.map(length => (
-            <button
-              key={length}
-              type="button"
-              onClick={() => toggleLength(length)}
-              className={`px-4 py-2 border transition-colors ${
-                formData.selectedLengths.includes(length)
-                  ? 'bg-navy text-white border-navy'
-                  : 'bg-white text-dark-gray border-brand hover:border-navy'
-              }`}
-            >
-              {length}"
-            </button>
-          ))}
-        </div>
       </div>
 
       {/* Buttons */}
