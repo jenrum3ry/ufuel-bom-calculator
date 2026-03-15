@@ -68,6 +68,26 @@ export function calculateWeight(widthInches, lengthInches, thickness) {
 }
 
 /**
+ * Return the subset of widths that the supplier stocks in a sheet
+ * long enough for the required circumference length.
+ *
+ * @param {number} requiredLengthInches - Minimum sheet length needed
+ * @param {string} thickness - e.g. '1/4'
+ * @returns {number[]} Array of valid widths in inches, sorted ascending
+ */
+export function getAvailableWidthsForLength(requiredLengthInches, thickness = '1/4') {
+  const table = weightTable[thickness] || {};
+  const validWidths = new Set();
+  for (const key of Object.keys(table)) {
+    const [wFt, lFt] = key.split('x').map(Number);
+    if (lFt * 12 >= requiredLengthInches) {
+      validWidths.add(wFt * 12);
+    }
+  }
+  return [...validWidths].sort((a, b) => a - b);
+}
+
+/**
  * Look up weight from the standard table if available, otherwise calculate
  * @param {number} widthFeet - Sheet width in feet
  * @param {number} lengthFeet - Sheet length in feet

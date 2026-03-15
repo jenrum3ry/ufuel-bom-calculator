@@ -11,7 +11,7 @@
  * Head fit-up adds 1" per end (+2" total), reducing the raw axial steel needed.
  */
 
-import { thicknessInInches, standardWidths, standardLengths, calculateWeight } from './weightTable.js';
+import { thicknessInInches, standardWidths, standardLengths, calculateWeight, getAvailableWidthsForLength } from './weightTable.js';
 import { findOptimalSheetCombination, calculateEffectiveLength } from './wasteOptimizer.js';
 
 /**
@@ -87,8 +87,19 @@ export function calculateShell({
   const lengthWastePerSheet = orderedSheetLength - circumferenceCut;
 
   // Step 3: Find optimal sheet WIDTH combination to cover tank axial length
+  // Only consider widths the supplier actually stocks in the required sheet length
+  const catalogWidths = getAvailableWidthsForLength(orderedSheetLength, thickness);
+  const filteredWidths = availableWidths.filter(w => catalogWidths.includes(w));
+
+  if (filteredWidths.length === 0) {
+    return {
+      error: 'No available sheet width is stocked by the supplier in the required length.',
+      od, requiredSheetLength, orderedSheetLength
+    };
+  }
+
   // headAdjustment = 2" (1" per end from 3" head skirt pushed in 2")
-  const optimalCombination = findOptimalSheetCombination(tankLength, availableWidths, 2);
+  const optimalCombination = findOptimalSheetCombination(tankLength, filteredWidths, 2);
 
   // Step 4: Calculate number of courses and effective axial coverage
   const numCourses = optimalCombination.sheets.reduce((sum, s) => sum + s.count, 0);
