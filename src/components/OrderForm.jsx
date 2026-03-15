@@ -33,6 +33,10 @@ const fractionOptions = [
   { label: '15/16', value: 15/16 },
 ];
 
+function fracLabel(opt) {
+  return opt.label === '0' ? '0"' : `${opt.label}"`;
+}
+
 /**
  * Order Form Component
  * Screen 1 - Input form for tank configuration
@@ -45,8 +49,13 @@ export default function OrderForm({ onCalculate }) {
     thickness: '1/4',
     diameterWhole: '',
     diameterFraction: '0',
-    tankLength: ''
+    lengthWhole: '',
+    lengthFraction: '0',
   });
+
+  const [errors, setErrors] = useState({});
+
+  const gradeOptions = ['a36', '304ss', '316ss'];
 
   const computeDiameter = () => {
     const whole = formData.diameterWhole === '' ? NaN : Number(formData.diameterWhole);
@@ -54,19 +63,21 @@ export default function OrderForm({ onCalculate }) {
     return whole + frac;
   };
 
-  const [errors, setErrors] = useState({});
-
-  const gradeOptions = ['a36', '304ss', '316ss'];
+  const computeLength = () => {
+    const whole = formData.lengthWhole === '' ? NaN : Number(formData.lengthWhole);
+    const frac = fractionOptions.find(f => f.label === formData.lengthFraction)?.value ?? 0;
+    return whole + frac;
+  };
 
   const handleChange = (e) => {
-    const { name, value, type } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'number' ? (value === '' ? '' : parseFloat(value)) : value
-    }));
-    // Clear error when field is modified
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: null }));
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear associated error when field is modified
+    const errorKey = (name === 'diameterWhole' || name === 'diameterFraction') ? 'tankDiameter'
+                   : (name === 'lengthWhole'   || name === 'lengthFraction')   ? 'tankLength'
+                   : name;
+    if (errors[errorKey]) {
+      setErrors(prev => ({ ...prev, [errorKey]: null }));
     }
   };
 
@@ -80,9 +91,10 @@ export default function OrderForm({ onCalculate }) {
       newErrors.tankDiameter = t('form.validation.diameterRange');
     }
 
-    if (!formData.tankLength) {
+    const len = computeLength();
+    if (!formData.lengthWhole) {
       newErrors.tankLength = t('form.validation.lengthRequired');
-    } else if (formData.tankLength <= 0) {
+    } else if (len <= 0) {
       newErrors.tankLength = t('form.validation.lengthPositive');
     }
 
@@ -97,7 +109,7 @@ export default function OrderForm({ onCalculate }) {
         steelGrade: formData.steelGrade,
         thickness: formData.thickness,
         tankDiameter: computeDiameter(),
-        tankLength: formData.tankLength,
+        tankLength: computeLength(),
         numberOfHeads: 2,
         availableWidths: [...standardWidths],
         availableLengths: [...standardLengths]
@@ -111,7 +123,8 @@ export default function OrderForm({ onCalculate }) {
       thickness: '1/4',
       diameterWhole: '',
       diameterFraction: '0',
-      tankLength: ''
+      lengthWhole: '',
+      lengthFraction: '0',
     });
     setErrors({});
   };
@@ -161,23 +174,23 @@ export default function OrderForm({ onCalculate }) {
           </div>
         </div>
 
-        {/* Tank Diameter — whole inches + fraction dropdown */}
+        {/* Tank Diameter — whole inches dropdown + fraction dropdown */}
         <div>
           <label className="block text-sm font-semibold mb-2 text-dark-gray">
             {t('form.tankDiameter')} ({t('form.inches')}) <Tooltip text={t('form.tooltips.diameter')} />
           </label>
           <div className="flex gap-2">
-            <input
-              type="number"
+            <select
               name="diameterWhole"
               value={formData.diameterWhole}
               onChange={handleChange}
-              min="36"
-              max="120"
-              step="1"
               className={`flex-1 ${errors.tankDiameter ? 'border-red-500' : ''}`}
-              placeholder="36 – 120"
-            />
+            >
+              <option value="">-- in --</option>
+              {Array.from({ length: 85 }, (_, i) => i + 36).map(n => (
+                <option key={n} value={String(n)}>{n}"</option>
+              ))}
+            </select>
             <select
               name="diameterFraction"
               value={formData.diameterFraction}
@@ -185,7 +198,7 @@ export default function OrderForm({ onCalculate }) {
               className="w-28"
             >
               {fractionOptions.map(opt => (
-                <option key={opt.label} value={opt.label}>{opt.label}"</option>
+                <option key={opt.label} value={opt.label}>{fracLabel(opt)}</option>
               ))}
             </select>
           </div>
@@ -194,21 +207,34 @@ export default function OrderForm({ onCalculate }) {
           )}
         </div>
 
-        {/* Tank Length */}
+        {/* Tank Length — whole inches dropdown + fraction dropdown */}
         <div>
           <label className="block text-sm font-semibold mb-2 text-dark-gray">
             {t('form.tankLength')} ({t('form.inches')}) <Tooltip text={t('form.tooltips.length')} />
           </label>
-          <input
-            type="number"
-            name="tankLength"
-            value={formData.tankLength}
-            onChange={handleChange}
-            min="1"
-            step="0.1"
-            className={`w-full ${errors.tankLength ? 'border-red-500' : ''}`}
-            placeholder="e.g. 144"
-          />
+          <div className="flex gap-2">
+            <select
+              name="lengthWhole"
+              value={formData.lengthWhole}
+              onChange={handleChange}
+              className={`flex-1 ${errors.tankLength ? 'border-red-500' : ''}`}
+            >
+              <option value="">-- in --</option>
+              {Array.from({ length: 469 }, (_, i) => i + 12).map(n => (
+                <option key={n} value={String(n)}>{n}"</option>
+              ))}
+            </select>
+            <select
+              name="lengthFraction"
+              value={formData.lengthFraction}
+              onChange={handleChange}
+              className="w-28"
+            >
+              {fractionOptions.map(opt => (
+                <option key={opt.label} value={opt.label}>{fracLabel(opt)}</option>
+              ))}
+            </select>
+          </div>
           {errors.tankLength && (
             <p className="text-red-500 text-sm mt-1">{errors.tankLength}</p>
           )}
