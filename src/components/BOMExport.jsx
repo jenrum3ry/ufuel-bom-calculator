@@ -70,13 +70,25 @@ export default function BOMExport({ results, onBack }) {
   };
 
   const handleDownloadPDF = () => {
+    const img = new Image();
+    img.src = './assets/torco-logo.png';
+    img.onload = () => generatePDF(img);
+    img.onerror = () => generatePDF(null);
+  };
+
+  const generatePDF = (logoImg) => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
+
+    // Logo — top-right corner
+    if (logoImg) {
+      doc.addImage(logoImg, 'PNG', pageWidth - 60, 8, 40, 20);
+    }
 
     // Title
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    doc.text(t('bom.title'), pageWidth / 2, 20, { align: 'center' });
+    doc.text(t('bom.title'), 20, 20);
 
     // Header info
     doc.setFontSize(11);
@@ -186,8 +198,8 @@ export default function BOMExport({ results, onBack }) {
             <p className="text-dark-gray mt-1">{t('bom.date')}: {formatDate()}</p>
           </div>
           <img
-            src="./assets/Ufuellogo.png"
-            alt="U-Fuel"
+            src="./assets/torco-logo.png"
+            alt="Torco de la Laguna"
             className="h-16 object-contain"
           />
         </div>
