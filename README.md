@@ -1,6 +1,17 @@
 # UFuel BOM Steel Calculator
 
-A portable bill-of-materials calculator for cylindrical steel tank manufacturing. Calculates optimal steel sheet requirements, weight, and waste for tank shells and end caps. Supports English and Spanish, and can export results as a printable PDF.
+A portable bill-of-materials calculator for cylindrical steel tank manufacturing. Enter tank diameter and length, and the calculator produces an optimal steel sheet order (minimum waste) for the shell and two end caps, including weights and a printable PDF requisition. Supports English and Spanish.
+
+## How to Use
+
+1. Enter the tank inner diameter and length in inches.
+2. Click **Calculate**.
+
+The calculator always assumes:
+- **1/4" (6.3 mm)** A-36 steel plate
+- **2 heads** (one per end)
+- Standard supplier sheet widths: 36", 48", 60", 72", 96"
+- Standard supplier sheet lengths: 96", 120", 240", 480", 560"
 
 ## Running Locally (No Installation Required)
 
