@@ -14,6 +14,25 @@ function Tooltip({ text }) {
   );
 }
 
+const fractionOptions = [
+  { label: '0',     value: 0 },
+  { label: '1/16',  value: 1/16 },
+  { label: '1/8',   value: 2/16 },
+  { label: '3/16',  value: 3/16 },
+  { label: '1/4',   value: 4/16 },
+  { label: '5/16',  value: 5/16 },
+  { label: '3/8',   value: 6/16 },
+  { label: '7/16',  value: 7/16 },
+  { label: '1/2',   value: 8/16 },
+  { label: '9/16',  value: 9/16 },
+  { label: '5/8',   value: 10/16 },
+  { label: '11/16', value: 11/16 },
+  { label: '3/4',   value: 12/16 },
+  { label: '13/16', value: 13/16 },
+  { label: '7/8',   value: 14/16 },
+  { label: '15/16', value: 15/16 },
+];
+
 /**
  * Order Form Component
  * Screen 1 - Input form for tank configuration
@@ -24,9 +43,16 @@ export default function OrderForm({ onCalculate }) {
   const [formData, setFormData] = useState({
     steelGrade: 'a36',
     thickness: '1/4',
-    tankDiameter: '',
+    diameterWhole: '',
+    diameterFraction: '0',
     tankLength: ''
   });
+
+  const computeDiameter = () => {
+    const whole = formData.diameterWhole === '' ? NaN : Number(formData.diameterWhole);
+    const frac = fractionOptions.find(f => f.label === formData.diameterFraction)?.value ?? 0;
+    return whole + frac;
+  };
 
   const [errors, setErrors] = useState({});
 
@@ -47,9 +73,10 @@ export default function OrderForm({ onCalculate }) {
   const validate = () => {
     const newErrors = {};
 
-    if (!formData.tankDiameter) {
+    const diam = computeDiameter();
+    if (!formData.diameterWhole) {
       newErrors.tankDiameter = t('form.validation.diameterRequired');
-    } else if (formData.tankDiameter < 36 || formData.tankDiameter > 120) {
+    } else if (diam < 36 || diam > 120) {
       newErrors.tankDiameter = t('form.validation.diameterRange');
     }
 
@@ -69,7 +96,7 @@ export default function OrderForm({ onCalculate }) {
       onCalculate({
         steelGrade: formData.steelGrade,
         thickness: formData.thickness,
-        tankDiameter: formData.tankDiameter,
+        tankDiameter: computeDiameter(),
         tankLength: formData.tankLength,
         numberOfHeads: 2,
         availableWidths: [...standardWidths],
@@ -82,7 +109,8 @@ export default function OrderForm({ onCalculate }) {
     setFormData({
       steelGrade: 'a36',
       thickness: '1/4',
-      tankDiameter: '',
+      diameterWhole: '',
+      diameterFraction: '0',
       tankLength: ''
     });
     setErrors({});
@@ -133,22 +161,34 @@ export default function OrderForm({ onCalculate }) {
           </div>
         </div>
 
-        {/* Tank Diameter */}
+        {/* Tank Diameter — whole inches + fraction dropdown */}
         <div>
           <label className="block text-sm font-semibold mb-2 text-dark-gray">
             {t('form.tankDiameter')} ({t('form.inches')}) <Tooltip text={t('form.tooltips.diameter')} />
           </label>
-          <input
-            type="number"
-            name="tankDiameter"
-            value={formData.tankDiameter}
-            onChange={handleChange}
-            min="36"
-            max="120"
-            step="0.1"
-            className={`w-full ${errors.tankDiameter ? 'border-red-500' : ''}`}
-            placeholder="36 - 120"
-          />
+          <div className="flex gap-2">
+            <input
+              type="number"
+              name="diameterWhole"
+              value={formData.diameterWhole}
+              onChange={handleChange}
+              min="36"
+              max="120"
+              step="1"
+              className={`flex-1 ${errors.tankDiameter ? 'border-red-500' : ''}`}
+              placeholder="36 – 120"
+            />
+            <select
+              name="diameterFraction"
+              value={formData.diameterFraction}
+              onChange={handleChange}
+              className="w-28"
+            >
+              {fractionOptions.map(opt => (
+                <option key={opt.label} value={opt.label}>{opt.label}"</option>
+              ))}
+            </select>
+          </div>
           {errors.tankDiameter && (
             <p className="text-red-500 text-sm mt-1">{errors.tankDiameter}</p>
           )}
