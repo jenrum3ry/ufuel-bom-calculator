@@ -7,8 +7,7 @@
     "instructions": {
       "title": "How to Use",
       "step1": "Enter your tank dimensions (diameter and length in inches)",
-      "step2": "Select which sheet sizes your supplier has available",
-      "step3": "Click Calculate to see the optimal steel order with minimum waste"
+      "step2": "Click Calculate to see the optimal steel order with minimum waste"
     },
     "tooltips": {
       "steelGrade": "Select the type of steel for your tank. A-36 is most common for standard tanks.",
